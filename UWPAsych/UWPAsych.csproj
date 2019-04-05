@@ -122,11 +122,14 @@
     <Compile Include="Common\NotifyPropertyChangeClass.cs" />
     <Compile Include="Common\RelayArgCommand.cs" />
     <Compile Include="Handler\IRequestHttpHandler.cs" />
-    <Compile Include="Handler\RequestHandler.cs" />
     <Compile Include="Model\BookingInfo.cs" />
     <Compile Include="Model\Catalog\BookingInfoCatalog.cs" />
+    <Compile Include="Model\Catalog\GuestInfoCatalog.cs" />
+    <Compile Include="Model\Catalog\RoomInfoCatalog.cs" />
+    <Compile Include="Model\Guest.cs" />
     <Compile Include="Model\Hotel.cs" />
     <Compile Include="Model\Catalog\HotelInfoCatalog.cs" />
+    <Compile Include="Model\Room.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\BookingInfoVm.cs" />
     <Compile Include="View\MainPage.xaml.cs">

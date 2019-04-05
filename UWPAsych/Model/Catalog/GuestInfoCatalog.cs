@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.Web.Http;
@@ -9,28 +12,19 @@ using UWPAsych.ViewModel;
 
 namespace UWPAsych.Model.Catalog
 {
-    public class HotelInfoCatalog : IRequestHttpHandler<Hotel>
+   
+   public class GuestInfoCatalog : IRequestHttpHandler<Guest>
     {
-        private const string Uri = "http://localhost:50659/api/Hotels";
-        public ObservableCollection<Hotel> Hotels { get; set; }
+        private const string Uri = "http://localhost:50659/api/Guests";
+        public ObservableCollection<Guest> Guests { get; set; }
         public BookingInfoVm BookingInfoVm { get; set; }
-
-        
-        public HotelInfoCatalog()
-        {
-
-        }
-
-        // inject View Model into HotelInfoCatalog
-        public HotelInfoCatalog(BookingInfoVm vm)
+        public GuestInfoCatalog(BookingInfoVm vm)
         {
             BookingInfoVm = vm;
-            Hotels = new ObservableCollection<Hotel>();
+            Guests = new ObservableCollection<Guest>();
             // Web API Uri link .........
             FetchAllData();
-
         }
-
         public async void FetchAllData()
         {
             using (var client = new HttpClient())
@@ -49,7 +43,7 @@ namespace UWPAsych.Model.Catalog
                     // convert Json into Objects
                     if (response != null)
                     {
-                        Hotels = JsonConvert.DeserializeObject<ObservableCollection<Hotel>>(response);
+                        Guests = JsonConvert.DeserializeObject<ObservableCollection<Guest>>(response);
                         // call on property change Interface
 
                     }
@@ -63,27 +57,11 @@ namespace UWPAsych.Model.Catalog
                 }
 
             }
-
-
         }
 
         public void Post()
         {
-            //Event newEvent = new Event()
-            //{
-            //    Id = EventVm.AddEvent.Id,
-            //    Name = EventVm.AddEvent.Name,
-            //    Place = EventVm.AddEvent.Place,
-            //    Description = EventVm.AddEvent.Description,
-            //    DateTime = DateTimeConverter.DateTimeOffsetAndTimeSetToDateTime(EventVm.Date, EventVm.Time)
-            //};
-            //// EventVm --> EventCatalogSingleton --> Add
-            //EventVm.EventCatalogSingleton.Add(newEvent);
-
-            //// Display successful message
-            //var messageDialog = new MessageDialog("Your have been successfully Added your new Event in calender: " + EventVm);
-            //await messageDialog.ShowAsync();
-
+            throw new NotImplementedException();
         }
     }
 }

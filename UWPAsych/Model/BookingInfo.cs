@@ -5,15 +5,19 @@ namespace UWPAsych.Model
     public class BookingInfo
     {
         public int BookingId { get; set; }
-        public char RoomType { get; set; }
+        public string RoomType { get; set; }
         public int RoomNo { get; set; }
         public float RoomPrice { get; set; }
         public string HotelName { get; set; }
         public string GuestName { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
+        public int HotelNo { get; set; }
+        public int GuestNo { get; set; }
 
-        public BookingInfo(int bookingId, char roomType, int roomNo, float roomPrice, string hotelName, string guestName, DateTime dateFrom, DateTime dateTo)
+
+
+        public BookingInfo(int bookingId, string roomType, int roomNo, float roomPrice, string hotelName, string guestName, DateTime dateFrom, DateTime dateTo)
         {
             BookingId = bookingId;
             RoomType = roomType;
