@@ -19,7 +19,7 @@
         <ComboBox HorizontalAlignment="Left" Margin="361,200,0,0"  VerticalAlignment="Top" Width="166" ItemsSource="{Binding HotelInfoCatalog.Hotels , Mode=TwoWay}" PlaceholderText="Choose Hotel" SelectedItem="{Binding SelectedValueHotelNo , Mode=TwoWay}" />
         <ComboBox HorizontalAlignment="Left" Margin="361,252,0,0"  VerticalAlignment="Top" Width="166" ItemsSource="{Binding GuestInfoCatalog.Guests , Mode=TwoWay}" PlaceholderText="Choose Guest" SelectedItem="{Binding SelectedValueGuestNo , Mode=TwoWay}"/>
         <TextBlock HorizontalAlignment="Left" Margin="260,254,0,0" TextWrapping="Wrap" Text="Guest Name" VerticalAlignment="Top" RenderTransformOrigin="0.525,1.45"/>
-        <TextBox   HorizontalAlignment="Left" Margin="361,303,0,0" Text="{Binding AddRoomType.RoomType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged }"  VerticalAlignment="Top" Width="166" RenderTransformOrigin="0.733,1.562"   />
+        <TextBox   HorizontalAlignment="Left" Margin="361,303,0,0" Text="{Binding AddBookingInfo.RoomType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged }"  VerticalAlignment="Top" Width="166" RenderTransformOrigin="0.733,1.562"   />
         <TextBlock HorizontalAlignment="Left" Margin="267,309,0,0" TextWrapping="Wrap" Text="Room Type" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="662,360,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.525,1.45" Height="21" Width="73" Text="DateTo"/>
         <CalendarDatePicker HorizontalAlignment="Left" Margin="758,356,0,0" VerticalAlignment="Top" DateFormat="{}{day.integer} {month.full} {year.full}" FirstDayOfWeek="Monday" PlaceholderText="{Binding DateTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Date="{Binding DateTo , Mode=TwoWay}" Width="240"/>
@@ -37,7 +37,7 @@
         <TextBlock  HorizontalAlignment="Left" Margin="662,205,0,0" Text="RoomNo" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="755,200,0,0"  VerticalAlignment="Top" RenderTransformOrigin="-0.319,0.125" Width="145"/>
         <TextBlock HorizontalAlignment="Left" Margin="662,254,0,0" Text="Room Price" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="755,254,0,0" Text="{Binding RoomPrice , Mode=TwoWay}"  VerticalAlignment="Top" Width="145" RenderTransformOrigin="0.357,0.656"/>
+        <TextBox HorizontalAlignment="Left" Margin="755,254,0,0" Text="{Binding AddBookingInfo.RoomPrice , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Top" Width="145" RenderTransformOrigin="0.357,0.656"/>
         <TextBlock HorizontalAlignment="Left" Margin="662,302,0,0" Text="RoomNo" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <ComboBox HorizontalAlignment="Left" Margin="758,303,0,0"  VerticalAlignment="Top" Width="143" PlaceholderText="Choose RoomNo" ItemsSource="{Binding RoomInfoCatalog.Rooms , Mode=TwoWay}" SelectedItem="{Binding SelectedValueRoomNo, Mode=TwoWay}" />
     </Grid>

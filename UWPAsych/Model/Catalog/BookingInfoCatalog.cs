@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Net.Http;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.Web.Http;
+using Windows.Web.Http.Headers;
 using Newtonsoft.Json;
 using UWPAsych.Handler;
 using UWPAsych.ViewModel;
@@ -17,7 +16,8 @@ namespace UWPAsych.Model.Catalog
 {
     public class BookingInfoCatalog : IRequestHttpHandler<BookingInfo>
     {
-        private const string Uri = "http://localhost:50659/api/BookingInfoes"; 
+        private const string Uri = "http://localhost:50659/api/BookingInfoes";
+        private const string PostUri = "http://localhost:50659/api/Bookings";
         public ObservableCollection<BookingInfo> BookingInfo { get; set; }
 
         public ObservableCollection<string> RoomType { get; set; }
@@ -74,14 +74,14 @@ namespace UWPAsych.Model.Catalog
 
         public async void Post()
         {
+            
             BookingInfo bookingInfo = new BookingInfo
             {
-               
                 HotelNo = BookingInfoVm.SelectedValueHotelNo.HotelNo,
                 RoomNo = BookingInfoVm.SelectedValueRoomNo.RoomNo,
                 GuestNo = BookingInfoVm.SelectedValueGuestNo.GuestNo,
-                RoomPrice = BookingInfoVm.RoomPrice,
-                RoomType = BookingInfoVm.AddRoomType.RoomType,
+                RoomPrice = BookingInfoVm.AddBookingInfo.RoomPrice,
+                RoomType = BookingInfoVm.AddBookingInfo.RoomType,
                 DateFrom = DateTimeOffsetAndTimeSetToDateTime(BookingInfoVm.DateFrom),
                 DateTo =  DateTimeOffsetAndTimeSetToDateTime(BookingInfoVm.DateTo)
             };
@@ -90,6 +90,8 @@ namespace UWPAsych.Model.Catalog
             {
                 using (var client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
                     // In Post Method first we convert New object into Json format , then format it to Json string form
                     var jsonStr = JsonConvert.SerializeObject(bookingInfo);
                     var content = new HttpStringContent(jsonStr, UnicodeEncoding.Utf8, "application/json");
@@ -98,7 +100,7 @@ namespace UWPAsych.Model.Catalog
                     {
                         // send a Post request and Get response with newly added resource
                         // ReSharper disable once AccessToDisposedClosure
-                        response = await client.PostAsync(new Uri(Uri), content);
+                        response = await client.PostAsync(new Uri(PostUri), content);
                     });
                     // Wait ........ for Post outcomes
                     task.Wait();
@@ -107,23 +109,32 @@ namespace UWPAsych.Model.Catalog
                         throw new Exception("Hotel already exist:");
                     }
                     // if response is success
-                    response.EnsureSuccessStatusCode();
-                    // Read response in a Json Format
-                    string jsonFormat = await response.Content.ReadAsStringAsync();
-                    // convert Json into object
-                    if (response!= null)
+                    //response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
                     {
+                        // Read response in a Json Format
+                        string jsonFormat = await response.Content.ReadAsStringAsync();
                         var newBooking = JsonConvert.DeserializeObject<BookingInfo>(jsonFormat);
                         string booking = $"BookingId:{newBooking.BookingId}, HotelNo: {newBooking.HotelNo}, GuestNo:{newBooking.GuestNo}, RoomNo:{newBooking.RoomNo}, DateFrom:{newBooking.DateFrom}, DateTo:{newBooking.DateTo} , Price:{newBooking.RoomPrice}, Type:{newBooking.RoomType}";
-                        var messageDialog = new MessageDialog("$ Congratulation New Booking has been Made. ");
+                        var messageDialog = new MessageDialog("$ Congratulation New Booking has been Made. " + booking);
                         await messageDialog.ShowAsync();
                     }
-
+                    else
+                    {
+                        if (response.StatusCode == HttpStatusCode.InternalServerError)
+                        {
+                            // Try to read response, log error etc.
+                            var errorJson = await response.Content.ReadAsStringAsync();
+                            var messageDialog = new MessageDialog(errorJson);
+                            await messageDialog.ShowAsync();
+                        }
+                    }
                 }
 
             }
             catch (Exception ex)
             {
+               
                 //// Display successful message
                 var messageDialog = new MessageDialog(ex.Message);
                 await messageDialog.ShowAsync();
@@ -162,8 +173,9 @@ namespace UWPAsych.Model.Catalog
         //    // EventVm.EventCatalogSingleton.Remove(EventVm.SelectedEvent);
         //}
         public static DateTime DateTimeOffsetAndTimeSetToDateTime(DateTimeOffset date)
-        {
-            return new DateTime(date.Year, date.Month, date.Day );
+        { 
+            DateTime dt = new DateTime();
+            return new DateTime(date.Year, date.Month, date.Day , dt.Hour,dt.Minute,dt.Minute);
         }
     }
 }

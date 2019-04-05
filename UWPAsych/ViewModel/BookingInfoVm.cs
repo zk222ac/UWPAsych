@@ -15,7 +15,7 @@ namespace UWPAsych.ViewModel
         public string HotelName { get; set; }
         public string GuestName { get; set; }
         public ICommand FetchDataCommand { get; set; }
-        public BookingInfo AddRoomType { get; set; }
+        public BookingInfo AddBookingInfo { get; set; }
         public BookingInfoCatalog BookingInfoCatalog { get; set; }
         public HotelInfoCatalog HotelInfoCatalog { get; set; }
         public GuestInfoCatalog GuestInfoCatalog { get; set; }
@@ -48,7 +48,6 @@ namespace UWPAsych.ViewModel
         public Hotel SelectedValueHotelNo { get; set; }
         public Room SelectedValueRoomNo { get; set; }
         public Guest SelectedValueGuestNo { get; set; }
-        
 
         public BookingInfoVm()
         {
@@ -57,8 +56,7 @@ namespace UWPAsych.ViewModel
             SelectedValueHotelNo = new Hotel();
             SelectedValueGuestNo = new Guest();
             SelectedValueRoomNo = new Room();
-           // SelectedValueRoomType = new string();
-            AddRoomType = new BookingInfo();
+            AddBookingInfo = new BookingInfo();
 
             // Inject BookingInfoVm into Request Handler..............
             BookingInfoCatalog = new BookingInfoCatalog(this);
