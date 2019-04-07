@@ -14,11 +14,11 @@ namespace UWPAsych.Model.Catalog
 {
    public class RoomInfoCatalog : IRequestHttpHandler<Hotel>
     {
-        private const string Uri = "http://localhost:50659/api/VdistinctRoomNoes";
+        private const string Uri = "http://localhost:6454/api/VdistinctRoomNoes";
         public ObservableCollection<Room> Rooms { get; set; }
-        public BookingInfoVm BookingInfoVm { get; set; }
+        public ViewModel.ViewModel BookingInfoVm { get; set; }
 
-        public RoomInfoCatalog(BookingInfoVm vm)
+        public RoomInfoCatalog(ViewModel.ViewModel vm)
         {
             BookingInfoVm = vm;
             Rooms = new ObservableCollection<Room>();

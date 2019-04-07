@@ -15,10 +15,10 @@ namespace UWPAsych.Model.Catalog
    
    public class GuestInfoCatalog : IRequestHttpHandler<Guest>
     {
-        private const string Uri = "http://localhost:50659/api/Guests";
+        private const string Uri = "http://localhost:6454/api/Guests";
         public ObservableCollection<Guest> Guests { get; set; }
-        public BookingInfoVm BookingInfoVm { get; set; }
-        public GuestInfoCatalog(BookingInfoVm vm)
+        public ViewModel.ViewModel BookingInfoVm { get; set; }
+        public GuestInfoCatalog(ViewModel.ViewModel vm)
         {
             BookingInfoVm = vm;
             Guests = new ObservableCollection<Guest>();

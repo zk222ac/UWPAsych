@@ -11,9 +11,9 @@ namespace UWPAsych.Model.Catalog
 {
     public class HotelInfoCatalog : IRequestHttpHandler<Hotel>
     {
-        private const string Uri = "http://localhost:50659/api/Hotels";
+        private const string Uri = "http://localhost:6454/api/Hotels";
         public ObservableCollection<Hotel> Hotels { get; set; }
-        public BookingInfoVm BookingInfoVm { get; set; }
+        public ViewModel.ViewModel BookingInfoVm { get; set; }
 
         
         public HotelInfoCatalog()
@@ -22,7 +22,7 @@ namespace UWPAsych.Model.Catalog
         }
 
         // inject View Model into HotelInfoCatalog
-        public HotelInfoCatalog(BookingInfoVm vm)
+        public HotelInfoCatalog(ViewModel.ViewModel vm)
         {
             BookingInfoVm = vm;
             Hotels = new ObservableCollection<Hotel>();

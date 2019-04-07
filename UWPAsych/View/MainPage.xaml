@@ -12,36 +12,9 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
-        <viewModel:BookingInfoVm/>
+        <viewModel:ViewModel/>
     </Page.DataContext>
     <Grid>
-        <Grid.Resources>
-            <DataTemplate x:Key="RowDetailsTemplate">
-                <StackPanel>
-                    <TextBlock Margin="20" Text="Here are the details for the selected mountain:" />
-                    <Grid Margin="20,10" Padding="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="HotelName:" FontWeight="SemiBold" FontSize="13" />
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Hotel: " FontWeight="SemiBold" FontSize="13" />
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="DateFrom: " FontWeight="SemiBold" FontSize="13" />
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="DateTo " FontWeight="SemiBold" FontSize="13" />
-                        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="13" Text="{Binding HotelName}" HorizontalAlignment="Right" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="13" Text="{Binding GuestName}" HorizontalAlignment="Right" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" FontSize="13" Text="{Binding DateFrom}" HorizontalAlignment="Right" />
-                        <TextBlock Grid.Row="3" Grid.Column="1" FontSize="13" Text="{Binding DateTo}" HorizontalAlignment="Right" />
-                    </Grid>
-                </StackPanel>
-            </DataTemplate>
-        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -98,11 +71,9 @@
         GridLinesVisibility= "None"
         HeadersVisibility="All"
         IsReadOnly="False"
-        RowDetailsTemplate="{StaticResource RowDetailsTemplate}"
         RowDetailsVisibilityMode="Collapsed"
         SelectionMode="Extended"
-        ItemsSource="{Binding BookingInfoCatalog.BookingInfo}"
-        RowGroupHeaderPropertyNameAlternative="GuestName">
+        ItemsSource="{Binding BookingInfoCatalog.BookingInfo}">
             <controls:DataGrid.Columns>
                 <controls:DataGridTextColumn Header="BookingId" Binding="{Binding BookingId , Mode=TwoWay}" Tag="BookingId" />
                 <controls:DataGridComboBoxColumn Header="HotelName" Binding="{Binding HotelName , Mode=TwoWay}" Tag="HotelName" />

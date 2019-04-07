@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Input;
 using UWPAsych.Common;
 using UWPAsych.Model;
@@ -6,14 +7,19 @@ using UWPAsych.Model.Catalog;
 
 namespace UWPAsych.ViewModel
 {
-   public class BookingInfoVm : NotifyPropertyChangeClass
+   public class ViewModel : NotifyPropertyChangeClass
     {
+        // Business logic property
         public int BookingId { get; set; }
         public string RoomType { get; set; }
         public int RoomNo { get; set; }
         public float RoomPrice { get; set; }
         public string HotelName { get; set; }
         public string GuestName { get; set; }
+        
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
+        // --------- ICommands ..................
         public ICommand FetchDataCommand { get; set; }
         public BookingInfo AddBookingInfo { get; set; }
         public BookingInfoCatalog BookingInfoCatalog { get; set; }
@@ -25,23 +31,24 @@ namespace UWPAsych.ViewModel
         // Display day and time in Coordinated Universal time (UTC)
         private DateTimeOffset _dateFrom;
         private DateTimeOffset _dateTo;
-        // call on property Change method
-        public DateTimeOffset DateFrom
+        // call on property Change method 
+       // This fields works on Make Booking page
+        public DateTimeOffset DateFromOffset
         {
             get => _dateFrom;
             set
             {
                 _dateFrom = value;
-                OnPropertyChanged(nameof(DateFrom));
+                OnPropertyChanged(nameof(DateFromOffset));
             }
         }
-        public DateTimeOffset DateTo
+        public DateTimeOffset DateToOffset
         {
             get => _dateTo;
             set
             {
                 _dateTo = value;
-                OnPropertyChanged(nameof(DateTo));
+                OnPropertyChanged(nameof(DateToOffset));
             }
         }
         // Selected item (key)
@@ -49,7 +56,7 @@ namespace UWPAsych.ViewModel
         public Room SelectedValueRoomNo { get; set; }
         public Guest SelectedValueGuestNo { get; set; }
 
-        public BookingInfoVm()
+        public ViewModel()
         {
             //.... selected ComboBox Value............................................
 
@@ -71,8 +78,8 @@ namespace UWPAsych.ViewModel
             // Get current datetime now
             DateTime dt = DateTime.Now;
             // represent current date in Years , Months , Day, hours , min , sec
-            DateFrom = new DateTimeOffset(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, new TimeSpan());
-            DateTo = new DateTimeOffset(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, new TimeSpan());
+            DateFromOffset = new DateTimeOffset(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, new TimeSpan());
+            DateToOffset = new DateTimeOffset(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second, new TimeSpan());
 
             // Invoke CreateEvent delegate method inside EvenHandler Class
             CreateBookingCommand = new RelayArgCommand<BookingInfo>(s => BookingInfoCatalog.Post());

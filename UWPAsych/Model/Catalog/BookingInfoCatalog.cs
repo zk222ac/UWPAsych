@@ -1,42 +1,37 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Threading.Tasks;
+using Windows.Storage.Streams;
 using Windows.UI.Popups;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 using Newtonsoft.Json;
 using UWPAsych.Handler;
-using UWPAsych.ViewModel;
-using HttpClient = Windows.Web.Http.HttpClient;
-using HttpResponseMessage = Windows.Web.Http.HttpResponseMessage;
-using UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding;
+
 
 namespace UWPAsych.Model.Catalog
 {
     public class BookingInfoCatalog : IRequestHttpHandler<BookingInfo>
     {
-        private const string Uri = "http://localhost:50659/api/BookingInfoes";
-        private const string PostUri = "http://localhost:50659/api/Bookings";
+        private const string Uri = "http://localhost:6454/api/BookingInfoes";
+        private const string PostUri = "http://localhost:6454/api/Bookings";
         public ObservableCollection<BookingInfo> BookingInfo { get; set; }
 
         public ObservableCollection<string> RoomType { get; set; }
 
-        public BookingInfoVm BookingInfoVm { get; set; }
+        public ViewModel.ViewModel ViewModel { get; set; }
         public BookingInfoCatalog()
         {
             
         }
-        public BookingInfoCatalog(BookingInfoVm vm)
+        public BookingInfoCatalog(ViewModel.ViewModel vm)
         {
-            BookingInfoVm = vm;
+            ViewModel = vm;
             // fixed Room Type : S , D , F
             RoomType = new ObservableCollection<string>() {"D", "S", "F"};
-           
             BookingInfo = new ObservableCollection<BookingInfo>();
-            // Web API Uri link .........
+            // Web API Uri link ..........................
             FetchAllData();
-           
         }
         public async void FetchAllData()
         {
@@ -65,25 +60,23 @@ namespace UWPAsych.Model.Catalog
                     //// Display successful message
                      var messageDialog = new MessageDialog(ex.Message);
                      await messageDialog.ShowAsync();
-
                 }
-              
             }
            
         }
 
         public async void Post()
         {
-            
+
             BookingInfo bookingInfo = new BookingInfo
             {
-                HotelNo = BookingInfoVm.SelectedValueHotelNo.HotelNo,
-                RoomNo = BookingInfoVm.SelectedValueRoomNo.RoomNo,
-                GuestNo = BookingInfoVm.SelectedValueGuestNo.GuestNo,
-                RoomPrice = BookingInfoVm.AddBookingInfo.RoomPrice,
-                RoomType = BookingInfoVm.AddBookingInfo.RoomType,
-                DateFrom = DateTimeOffsetAndTimeSetToDateTime(BookingInfoVm.DateFrom),
-                DateTo =  DateTimeOffsetAndTimeSetToDateTime(BookingInfoVm.DateTo)
+                HotelNo = ViewModel.SelectedValueHotelNo.HotelNo,
+                RoomNo = ViewModel.SelectedValueRoomNo.RoomNo,
+                GuestNo = ViewModel.SelectedValueGuestNo.GuestNo,
+                RoomPrice = ViewModel.AddBookingInfo.RoomPrice,
+                RoomType = ViewModel.AddBookingInfo.RoomType,
+                DateFrom = DateTimeOffsetAndTimeSetToDateTime(ViewModel.DateFromOffset),
+                DateTo = DateTimeOffsetAndTimeSetToDateTime(ViewModel.DateToOffset)
             };
 
             try
@@ -115,7 +108,7 @@ namespace UWPAsych.Model.Catalog
                         // Read response in a Json Format
                         string jsonFormat = await response.Content.ReadAsStringAsync();
                         var newBooking = JsonConvert.DeserializeObject<BookingInfo>(jsonFormat);
-                        string booking = $"BookingId:{newBooking.BookingId}, HotelNo: {newBooking.HotelNo}, GuestNo:{newBooking.GuestNo}, RoomNo:{newBooking.RoomNo}, DateFrom:{newBooking.DateFrom}, DateTo:{newBooking.DateTo} , Price:{newBooking.RoomPrice}, Type:{newBooking.RoomType}";
+                        string booking = $"BookingId:{newBooking.BookingId}, HotelNo: {newBooking.HotelNo}, GuestNo:{newBooking.GuestNo}, RoomNo:{newBooking.RoomNo}, DateFrom:{newBooking.DateFrom}, DateTo:{newBooking.DateTo} ";
                         var messageDialog = new MessageDialog("$ Congratulation New Booking has been Made. " + booking);
                         await messageDialog.ShowAsync();
                     }
@@ -134,14 +127,10 @@ namespace UWPAsych.Model.Catalog
             }
             catch (Exception ex)
             {
-               
                 //// Display successful message
-                var messageDialog = new MessageDialog(ex.Message);
+                var messageDialog = new MessageDialog(ex.InnerException.Message);
                 await messageDialog.ShowAsync();
-
             }
-
-
             //// Display successful message
             //var messageDialog = new MessageDialog("Your have been successfully Added your new Event in calender: " + EventVm);
             //await messageDialog.ShowAsync();

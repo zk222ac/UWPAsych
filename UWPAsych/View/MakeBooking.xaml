@@ -12,7 +12,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
         <Grid.DataContext>
-            <viewModel:BookingInfoVm/>
+            <viewModel:ViewModel/>
         </Grid.DataContext>
 
         <TextBlock HorizontalAlignment="Left" Margin="264,205,0,0"   TextWrapping="Wrap" Text="HotelName" VerticalAlignment="Top" />
@@ -22,8 +22,8 @@
         <TextBox   HorizontalAlignment="Left" Margin="361,303,0,0" Text="{Binding AddBookingInfo.RoomType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged }"  VerticalAlignment="Top" Width="166" RenderTransformOrigin="0.733,1.562"   />
         <TextBlock HorizontalAlignment="Left" Margin="267,309,0,0" TextWrapping="Wrap" Text="Room Type" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="662,360,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.525,1.45" Height="21" Width="73" Text="DateTo"/>
-        <CalendarDatePicker HorizontalAlignment="Left" Margin="758,356,0,0" VerticalAlignment="Top" DateFormat="{}{day.integer} {month.full} {year.full}" FirstDayOfWeek="Monday" PlaceholderText="{Binding DateTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Date="{Binding DateTo , Mode=TwoWay}" Width="240"/>
-        <CalendarDatePicker HorizontalAlignment="Left" Margin="361,351,0,0" VerticalAlignment="Top" DateFormat="{}{day.integer} {month.full} {year.full}" FirstDayOfWeek="Monday" PlaceholderText="{Binding DateFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   Date="{Binding DateFrom , Mode=TwoWay}" Width="240" />
+        <CalendarDatePicker HorizontalAlignment="Left" Margin="758,356,0,0" VerticalAlignment="Top" DateFormat="{}{day.integer} {month.full} {year.full}" FirstDayOfWeek="Monday" PlaceholderText="{Binding DateTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Date="{Binding DateToOffset , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" Width="240"/>
+        <CalendarDatePicker HorizontalAlignment="Left" Margin="361,351,0,0" VerticalAlignment="Top" DateFormat="{}{day.integer} {month.full} {year.full}" FirstDayOfWeek="Monday" PlaceholderText="{Binding DateFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"   Date="{Binding DateFromOffset , Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" Width="240" />
         <TextBlock HorizontalAlignment="Left" Margin="264,355,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.525,1.45" Height="23" Width="71" Text="DateFrom"/>
         <AppBarButton Background="BlanchedAlmond" HorizontalAlignment="Left" Icon="Add" Label="Add Booking" Margin="518,429,0,0" VerticalAlignment="Top" Command="{Binding CreateBookingCommand}" Height="61" Width="83"/>
         <AppBarButton HorizontalAlignment="Left" Icon="Back" Label="Return" Margin="662,429,0,0" VerticalAlignment="Top" Background="Aqua" Width="93">

@@ -131,7 +131,7 @@
     <Compile Include="Model\Catalog\HotelInfoCatalog.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModel\BookingInfoVm.cs" />
+    <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
